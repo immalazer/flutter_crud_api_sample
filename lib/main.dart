@@ -68,8 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
       case 'edit':
         await dialogInputData(
           context,
-          "Ubah data",
-          dataListNotifier.value.dataList[index].data,
           index,
         ).then((value) async {
           if (value != null) {
@@ -94,8 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<String?> dialogInputData(
     BuildContext context,
-    String title,
-    String hint,
     int id,
   ) async {
     final textFieldController = TextEditingController();
@@ -104,10 +100,9 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(title),
+          title: Text("Aksi"),
           content: TextField(
             controller: textFieldController,
-            decoration: InputDecoration(hintText: hint),
           ),
           actions: <Widget>[
             ElevatedButton(
@@ -163,12 +158,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 100,
                               width: double.infinity,
                               child: Center(
-                                child: Text(
-                                  value.dataList[index].data,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
+                                child: ListTile(
+                                  title: Text(index.toString()),
+                                  subtitle: Text(value.dataList[index].data.toString()),
                                 ),
                               ),
                             ),
@@ -187,8 +179,6 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () async {
           dialogInputData(
             context,
-            "Input data",
-            "Data yang ingin diinput",
             -1,
           ).then((value) {
             if (value != null) {
@@ -213,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class Data {
   Data(this.key, this.data);
   final String key;
-  final String data;
+  final Map<String, dynamic> data;
 }
 
 class DataList {

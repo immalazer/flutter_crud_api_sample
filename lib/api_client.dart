@@ -44,13 +44,13 @@ class ApiClient {
     }
   }
 
-  Future<String?> getItem(String key) async {
+  Future<List<dynamic>?> getItem(String key) async {
     try {
       final response = await http.get(Uri.parse("$apiUrl/get/$key"));
 
       if (response.statusCode == 200) {
         List<dynamic> body = jsonDecode(response.body);
-        return body[0]['data'];
+        return body;
       } else {
         return null;
       }
@@ -68,7 +68,7 @@ class ApiClient {
         List<Data> returnData = <Data>[];
         List<dynamic> body = await jsonDecode(response.body);
         for (var value in body) {
-          var data = Data(value['id'].toString(), value['nama'].toString());
+          var data = Data(value['id'].toString(), value);
           returnData.add(data);
         }
         return returnData;
